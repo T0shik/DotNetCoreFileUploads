@@ -1,0 +1,89 @@
+﻿<h1>Home Page</h1>
+
+
+
+<div>
+    <h4>Single File Upload</h4>
+    <form asp-controller="Home" asp-action="SingleFile"
+          enctype="multipart/form-data" method="post">
+        <input type="file" name="file" />
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+
+<div>
+    <h4>Mutliple File Upload</h4>
+    <form asp-controller="Home" asp-action="MultipleFiles"
+          enctype="multipart/form-data" method="post">
+        <input type="file" multiple name="files" />
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+<div>
+    <h4>File in Model Upload</h4>
+    <form asp-controller="Home" asp-action="FileInModel"
+          enctype="multipart/form-data" method="post">
+        <input type="text" name="someForm.Name" />
+        <input type="file" multiple name="someForm.File" />
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+
+
+<div>
+    <h4>Single File Upload (JS)</h4>
+    <input type="file" onchange="UploadFile(event)" />
+</div>
+
+
+<div>
+    <h4>Multiple File Upload (JS)</h4>
+    <input type="file" multiple onchange="UploadFiles(event)" />
+</div>
+
+
+<div>
+    <h4>File in Model Upload (JS)</h4>
+    <input type="text" id="file-name" />
+    <input type="file" onchange="UploadFileToModel(event)" />
+</div>
+
+@section scripts {
+    <script>
+        var UploadFile = function (e) {
+            var file = e.target.files[0];
+
+            var formData = new FormData();
+
+            formData.append("file", file);
+
+            axios.post("/Home/SingleFile", formData);
+        }
+
+        var UploadFiles = function (e) {
+            var files = e.target.files;
+            var formData = new FormData();
+
+            for (var i = 0; i < files.length; i++) {
+                formData.append("files", files[i]);
+            }
+
+            axios.post("/Home/MultipleFiles", formData);
+        }
+
+
+        var UploadFileToModel = function (e) {
+            var fileName = document.getElementById("file-name").value
+            var file = e.target.files[0];
+            var formData = new FormData();
+
+            formData.append("someForm.Name", fileName);
+            formData.append("someForm.File", file);
+
+            axios.post("/Home/FileInModel", formData);
+        }
+    </script>
+}
