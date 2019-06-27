@@ -1,0 +1,16 @@
+﻿@model IEnumerable<HowToFileDisplay.Services.File>
+
+<h1>Simple File Display</h1>
+
+<div>
+    <form asp-controller="Home" asp-action="Index"
+          enctype="multipart/form-data" method="post">
+        <input type="file" name="file" />
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+@foreach (var file in Model)
+{
+    <img src="@file.RelativePath" />
+}

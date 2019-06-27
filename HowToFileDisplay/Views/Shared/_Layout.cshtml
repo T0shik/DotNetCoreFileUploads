@@ -1,0 +1,20 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <nav>
+        <a asp-controller="Home" asp-action="Index">Index</a>
+        <a asp-controller="Home" asp-action="Advanced">Advanced</a>
+    </nav>
+    <div>
+        @RenderBody()
+    </div>
+
+    @RenderSection("scripts", false)
+
+</body>
+</html>

@@ -1,0 +1,37 @@
+﻿@model IEnumerable<int>
+
+<h1>Advanced File Display</h1>
+
+<div>
+    <form asp-controller="Home" asp-action="Advanced"
+          enctype="multipart/form-data" method="post">
+        <input type="file" name="file" />
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+@foreach (var id in Model)
+{
+    <img src="" data-img="@id" />
+    <a asp-controller="Home" asp-action="DownloadImage" asp-route-id="@id" target="_blank">Download</a>
+}
+
+@section scripts {
+    <script>
+        var images = document.querySelectorAll("img[data-img]");
+
+        var setImages = function () {
+            var width = window.innerWidth;
+            var baseUrl = window.origin + '/Home/GetImage'
+
+            images.forEach(el => {
+                var id = el.getAttribute('data-img')
+                var imgUrl = baseUrl + '?id=' + id + '&width=' + width;
+                console.log(imgUrl)
+                el.src = imgUrl;
+            })
+        }
+
+        setImages();
+    </script>
+}
