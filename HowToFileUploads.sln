@@ -5,7 +5,9 @@ VisualStudioVersion = 15.0.28307.572
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HowToFileUploads", "HowToFileUploads\HowToFileUploads.csproj", "{B34EEBB8-A0B1-46DF-9725-22BB92DCAF64}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HowToFileDisplay", "HowToFileDisplay\HowToFileDisplay.csproj", "{F6F13211-0C38-4831-8BF1-DDDDA37508A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HowToFileDisplay", "HowToFileDisplay\HowToFileDisplay.csproj", "{F6F13211-0C38-4831-8BF1-DDDDA37508A4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HowToVideoFiles", "HowToVideoFiles\HowToVideoFiles.csproj", "{C2EA7904-0497-4809-9411-ECA9EA42E4A9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{F6F13211-0C38-4831-8BF1-DDDDA37508A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F6F13211-0C38-4831-8BF1-DDDDA37508A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F6F13211-0C38-4831-8BF1-DDDDA37508A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2EA7904-0497-4809-9411-ECA9EA42E4A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2EA7904-0497-4809-9411-ECA9EA42E4A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2EA7904-0497-4809-9411-ECA9EA42E4A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2EA7904-0497-4809-9411-ECA9EA42E4A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

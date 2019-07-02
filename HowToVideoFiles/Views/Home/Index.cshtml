@@ -1,0 +1,15 @@
+﻿<h1>Working with Videos</h1>
+
+<div>
+    <form asp-controller="Home" asp-action="Index"
+          enctype="multipart/form-data" method="post">
+        <input type="file" name="file" accept="video/mp4" />
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+
+<div>
+    <video width="300" height="200" controls muted
+           src="~/converted.mp4" type="video/mp4"></video>
+</div>
