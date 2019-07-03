@@ -23,7 +23,7 @@ namespace HowToVideoFiles.Controllers
         public IActionResult Index() => View();
 
         [HttpPost]
-        public async Task<IActionResult> Index(IFormFile file)
+        public async Task<IActionResult> Index(IFormFile file, double start, double end)
         {
             using (var fileStream =
                 new FileStream(Path.Combine(_dir, "file.mp4"), FileMode.Create, FileAccess.Write))
@@ -31,12 +31,12 @@ namespace HowToVideoFiles.Controllers
                 await file.CopyToAsync(fileStream);
             }
 
-            await ConvertVideo();
+            await ConvertVideo(start, end);
 
             return RedirectToAction("Index");
         }
 
-        public async Task<bool> ConvertVideo()
+        public async Task<bool> ConvertVideo(double start, double end)
         {
             try
             {
@@ -45,11 +45,16 @@ namespace HowToVideoFiles.Controllers
 
                 FFmpeg.ExecutablesPath = Path.Combine(_dir, "ffmpeg");
 
+                var startSpan = TimeSpan.FromSeconds(start);
+                var endSpan = TimeSpan.FromSeconds(end);
+                var duration = endSpan - startSpan;
+
                 var info = await MediaInfo.Get(input);
 
                 var videoStream = info.VideoStreams.First()
                     .SetCodec(VideoCodec.H264)
-                    .SetSize(VideoSize.Hd480);
+                    .SetSize(VideoSize.Hd480)
+                    .Split(startSpan, duration);
 
                 await Conversion.New()
                     .AddStream(videoStream)

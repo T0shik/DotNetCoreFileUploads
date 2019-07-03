@@ -3,9 +3,12 @@
 <div>
     <form asp-controller="Home" asp-action="Index"
           enctype="multipart/form-data" method="post">
-        <input type="file" name="file" accept="video/mp4" />
+        <input type="file" name="file" onchange="openFile(event)" accept="video/mp4" />
+        <input name="start" />
+        <input name="end" />
         <button type="submit">Submit</button>
     </form>
+    <video id="templateVideoPlayer" width="300" controls="controls" muted></video>
 </div>
 
 
@@ -13,3 +16,15 @@
     <video width="300" height="200" controls muted
            src="~/converted.mp4" type="video/mp4"></video>
 </div>
+
+@section scripts {
+    <script>
+        var openFile = function (event) {
+            var file = event.target.files[0];
+            var videoPlayer = document.getElementById('templateVideoPlayer');
+
+            var url = URL.createObjectURL(file);
+            videoPlayer.setAttribute('src', url);
+        }
+    </script>
+}
