@@ -1,16 +1,23 @@
 ﻿<h1>Working with Videos</h1>
 
 <div>
-    <form asp-controller="Home" asp-action="Index"
-          enctype="multipart/form-data" method="post">
+    <div>
+
         <input type="file" name="file" onchange="openFile(event)" accept="video/mp4" />
-        <input name="start" />
-        <input name="end" />
-        <button type="submit">Submit</button>
-    </form>
+    </div>
+    <hr />
+    <div>
+        <form asp-controller="Home" asp-action="TrimVideo" onsubmit="submitForm(event)" method="post">
+            <input name="start" />
+            <input name="end" />
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+    <hr />
+
     <video id="templateVideoPlayer" width="300" controls="controls" muted></video>
 </div>
-
+<hr />
 
 <div>
     <video width="300" height="200" controls muted
@@ -18,13 +25,37 @@
 </div>
 
 @section scripts {
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
+        var uploadComplete = false;
+
         var openFile = function (event) {
             var file = event.target.files[0];
             var videoPlayer = document.getElementById('templateVideoPlayer');
 
             var url = URL.createObjectURL(file);
             videoPlayer.setAttribute('src', url);
+
+            var formData = new FormData();
+            formData.append("file", file);
+            axios.post('/Home/UploadFile', formData)
+                .then(res => {
+                    uploadComplete = true;
+                    alert("upload has complete");
+                });
+        }
+
+        var submitForm = function (event) {
+            console.log("Form Submit Started")
+            event.preventDefault();
+
+            var interval = setInterval(function () {
+                console.log("trying to submit form")
+                if (uploadComplete) {
+                    event.target.submit();
+                    clearInterval(interval);
+                }
+            }, 100)
         }
     </script>
 }

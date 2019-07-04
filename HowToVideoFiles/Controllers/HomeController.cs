@@ -23,14 +23,20 @@ namespace HowToVideoFiles.Controllers
         public IActionResult Index() => View();
 
         [HttpPost]
-        public async Task<IActionResult> Index(IFormFile file, double start, double end)
+        public async Task<IActionResult> UploadFile(IFormFile file)
         {
             using (var fileStream =
                 new FileStream(Path.Combine(_dir, "file.mp4"), FileMode.Create, FileAccess.Write))
             {
                 await file.CopyToAsync(fileStream);
             }
+            
+            return Ok();
+        }
 
+        [HttpPost]
+        public async Task<IActionResult> TrimVideo(double start, double end)
+        {
             await ConvertVideo(start, end);
 
             return RedirectToAction("Index");
