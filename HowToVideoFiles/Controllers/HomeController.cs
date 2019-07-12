@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using HowToVideoFiles.BackgroundTasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -13,10 +14,14 @@ namespace HowToVideoFiles.Controllers
     public class HomeController : Controller
     {
         private string _dir;
+        private IBackgroundQueue _queue;
 
-        public HomeController(IHostingEnvironment env)
+        public HomeController(
+            IHostingEnvironment env,
+            IBackgroundQueue queue)
         {
             _dir = env.WebRootPath;
+            _queue = queue;
         }
 
         [HttpGet]
@@ -30,14 +35,17 @@ namespace HowToVideoFiles.Controllers
             {
                 await file.CopyToAsync(fileStream);
             }
-            
+
             return Ok();
         }
 
         [HttpPost]
-        public async Task<IActionResult> TrimVideo(double start, double end)
+        public IActionResult TrimVideo(double start, double end)
         {
-            await ConvertVideo(start, end);
+            _queue.QueueTask(async token =>
+            {
+                await ConvertVideo(start, end);
+            });
 
             return RedirectToAction("Index");
         }

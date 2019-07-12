@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using HowToVideoFiles.BackgroundTasks;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -8,6 +9,8 @@ namespace HowToVideoFiles
     {
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHostedService<QueueService>();
+            services.AddSingleton<IBackgroundQueue, BackgroundQueue>();
             services.AddMvc();
         }
 
