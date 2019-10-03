@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Xabe.FFmpeg;
 using Xabe.FFmpeg.Enums;
@@ -44,13 +45,13 @@ namespace HowToVideoFiles.Controllers
         {
             _queue.QueueTask(async token =>
             {
-                await ConvertVideo(start, end);
+                await ConvertVideo(start, end, token);
             });
 
             return RedirectToAction("Index");
         }
 
-        public async Task<bool> ConvertVideo(double start, double end)
+        public async Task<bool> ConvertVideo(double start, double end, CancellationToken ct)
         {
             try
             {
@@ -73,7 +74,7 @@ namespace HowToVideoFiles.Controllers
                 await Conversion.New()
                     .AddStream(videoStream)
                     .SetOutput(output)
-                    .Start();
+                    .Start(ct);
             }
             catch (Exception e)
             {
